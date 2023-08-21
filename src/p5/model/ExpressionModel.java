@@ -30,7 +30,7 @@ public class ExpressionModel {
                     while (operators.peek() != '(') {
                         evaluateTop();
                     }
-                    operators.pop(); // Pop '('
+                    operators.pop();
                 } else if (isOperator(c)) {
                     while (!operators.isEmpty() && precedence(c) <= precedence(operators.peek())) {
                         evaluateTop();
