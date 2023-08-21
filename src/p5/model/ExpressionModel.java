@@ -22,7 +22,7 @@ public class ExpressionModel {
                         numBuilder.append(expression.charAt(i));
                         i++;
                     }
-                    i--; // Move back one step to correctly process the next character
+                    i--;
                     values.push(Double.parseDouble(numBuilder.toString()));
                 } else if (c == '(') {
                     operators.push(c);
