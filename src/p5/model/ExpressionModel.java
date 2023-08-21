@@ -1,4 +1,3 @@
-
 package p5.model;
 
 import java.util.Stack;
@@ -36,6 +35,8 @@ public class ExpressionModel {
                         evaluateTop();
                     }
                     operators.push(c);
+                } else if (isFunction(c)) {
+                    operators.push(c);
                 }
             }
             while (!operators.isEmpty()) {
@@ -52,32 +53,49 @@ public class ExpressionModel {
         return c == '+' || c == '-' || c == '*' || c == '/';
     }
 
+    private boolean isFunction(char c) {
+        return c == 's' || c == 'c' || c == 't';
+    }
+
     private int precedence(char operator) {
         if (operator == '+' || operator == '-') {
             return 1;
         } else if (operator == '*' || operator == '/') {
             return 2;
+        } else if (operator == 's' || operator == 'c' || operator == 't') {
+            return 3;
         }
         return 0;
     }
 
     private void evaluateTop() {
         char operator = operators.pop();
-        double value2 = values.pop();
-        double value1 = values.pop();
-        switch (operator) {
-            case '+':
-                values.push(value1 + value2);
-                break;
-            case '-':
-                values.push(value1 - value2);
-                break;
-            case '*':
-                values.push(value1 * value2);
-                break;
-            case '/':
-                values.push(value1 / value2);
-                break;
+        if (operator == 's') {
+            double value = values.pop();
+            values.push(Math.sin(Math.toRadians(value)));
+        } else if (operator == 'c') {
+            double value = values.pop();
+            values.push(Math.cos(Math.toRadians(value)));
+        } else if (operator == 't') {
+            double value = values.pop();
+            values.push(Math.tan(Math.toRadians(value)));
+        } else {
+            double value2 = values.pop();
+            double value1 = values.pop();
+            switch (operator) {
+                case '+':
+                    values.push(value1 + value2);
+                    break;
+                case '-':
+                    values.push(value1 - value2);
+                    break;
+                case '*':
+                    values.push(value1 * value2);
+                    break;
+                case '/':
+                    values.push(value1 / value2);
+                    break;
+            }
         }
     }
 }
